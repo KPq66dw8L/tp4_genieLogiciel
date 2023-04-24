@@ -3,7 +3,10 @@ package aeroport;
 public class Ville {
     private String nom;
 
-    public Ville (String nom) {
+    public Ville () {
+    }
+
+    public void setNom (String nom) {
         this.nom = nom;
     }
 
