@@ -1,4 +1,4 @@
-package aeroport;
+package gestionVol;
 
 public class Aeroport {
 
