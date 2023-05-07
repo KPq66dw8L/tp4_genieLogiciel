@@ -2,13 +2,17 @@ package gestionVol;
 
 import java.time.Duration;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
+import java.util.LinkedHashSet;
 
 public class Vol {
 
     private String numero;
     private Aeroport depart;
     private Aeroport arrivee;
+    private LinkedHashSet<Escale> escales; // ordered & unique
     private Compagnie compagnie;
     private Date dateDepart;
     private Date dateArrivee;
@@ -20,13 +24,15 @@ public class Vol {
      */
     protected Vol(String numero){
         this.numero = numero;
+        this.escales = new LinkedHashSet<>();
     }
 
     public Vol() {
+        this.escales = new LinkedHashSet<>();
     }
 
     /**
-     * Permet de calculer l'attribut dérivé 'duree'
+     * Equivalent d'un l'attribut dérivé 'duree' = durée du vol
      * @return duree
      */
     public Duration obtenirDuree() {
@@ -145,6 +151,38 @@ public class Vol {
      */
     public void setArrivee(Aeroport arrivee) {
         this.arrivee = arrivee;
+    }
+
+    /**
+     * Simple fonction.
+     * @return la liste des escales (ordonee et unique)
+     */
+    public LinkedHashSet<Escale> getEscales(){
+        return this.escales;
+    }
+
+    /**
+     * Remplace la liste d'escales actuelle par une nouvelle liste.
+     * @param escales
+     */
+    public void setEscales(LinkedHashSet<Escale> escales){
+        this.escales = escales;
+    }
+
+    /**
+     * Ajoute une nouvelle escale dans la liste actuelle.
+     * @param escale
+     */
+    public void addEscale(Escale escale) throws Exception{
+        try {
+            if (this.escales.contains(escale)){
+                throw new Exception("Cette escale fait deja partie du vol.");
+            } else {
+                this.escales.add(escale);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     /**
