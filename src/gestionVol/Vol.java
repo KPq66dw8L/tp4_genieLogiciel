@@ -186,6 +186,20 @@ public class Vol {
     }
 
     /**
+     * Ouvre le vol
+     */
+    public void ouvrir(){
+        this.ouvert = true;
+    }
+
+    /**
+     * Ferme le vol
+     */
+    public void fermer() {
+        this.ouvert = false;
+    }
+
+    /**
      * Vérifie si 2 vols possèdent le meme numéro.
      * @param obj
      * @return boolean
