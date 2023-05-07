@@ -18,9 +18,18 @@ public class Reservation {
         this.uniqueID = UUID.randomUUID().toString();
         this.date = ZonedDateTime.now();
         this.client = clientRef;
+        paiement();
     }
 
     /**
+     * TODO: debiter le client, se fait lors de la creation de la reservation
+     */
+    public void paiement(){
+
+    }
+
+    /**
+     * TODO: confirmation automatique X temps avant le vol?? ou plus simple?
      * Confirmation de la reservation, apres avoir paye et avant le vol
      * @param c
      * @throws IllegalArgumentException
@@ -35,7 +44,7 @@ public class Reservation {
     }
 
     /**
-     * Fonction simple
+     * TODO: remboursement si avant confirmation, sinon juste annulation
      */
     public void annuler(){
         this.confirmed = false;
