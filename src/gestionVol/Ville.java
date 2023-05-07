@@ -1,9 +1,9 @@
-package reservation;
+package gestionVol;
 
-public class Passager {
+public class Ville {
     private String nom;
 
-    public Passager () {
+    public Ville () {
     }
 
     public void setNom (String nom) {
