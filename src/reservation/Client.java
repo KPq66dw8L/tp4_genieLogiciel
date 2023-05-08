@@ -31,7 +31,7 @@ public class Client {
     }
 
     /**
-     * Configure le moyen de paiement, actuellement accepte uniquement VISA
+     * Configure le moyen de paiement
      * @param cc
      * @throws IllegalArgumentException
      */

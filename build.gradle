@@ -8,6 +8,28 @@ repositories {
     mavenCentral()
 }
 
+dependencies {
+    implementation 'org.hamcrest:hamcrest:2.2'
+    implementation platform('org.junit:junit-bom:5.7.0')
+    implementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+    // https://mvnrepository.com/artifact/org.testng/testng
+    implementation group: 'org.testng', name: 'testng', version: '7.7.1'
+    // https://mvnrepository.com/artifact/org.xmlunit/xmlunit-matchers
+    implementation 'org.xmlunit:xmlunit-matchers:2.9.1'
+    // https://mvnrepository.com/artifact/org.hamcrest/hamcrest
+    implementation 'org.hamcrest:hamcrest:2.2'
+
+
+}
+
+test {
+    useTestNG () {
+
+    }
+}
+
 jar {
  manifest {
         attributes 'Implementation-Title': 'Gradle Quickstart',
