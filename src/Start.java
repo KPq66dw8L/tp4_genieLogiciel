@@ -1,11 +1,17 @@
 import gestionVol.Compagnie;
 import gestionVol.Vol;
+import reservation.Association_Reservation_Vol;
+import reservation.Client;
+import reservation.Reservation;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Start {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception {
         Vol volFinal = new Vol();
 
         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm");
@@ -47,5 +53,19 @@ public class Start {
         for(Vol v : compagnie.getVols()){
             System.out.println(v.getNumero());
         }
+
+        // code pour créer des instances de Reservation et Vol
+        // et les associer dans une liste de Association_Reservation_Vol
+        List<Association_Reservation_Vol> associations = new ArrayList<>();
+
+        // exemple:
+        Client c1 = new Client("Pablo Escobar");
+        c1.setContact("pablo@gmail.com");
+        // Testing purpose: https://fossbytes.com/tools/credit-card-generator
+        c1.setPaiement("4420543804729930");
+        Reservation r1 = new Reservation(c1.getReference());
+        Vol v1 = new Vol("AF123", new Date(), new Date());
+        Association_Reservation_Vol a1 = new Association_Reservation_Vol(r1, v1);
+        associations.add(a1);
     }
 }

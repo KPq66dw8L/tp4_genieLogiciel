@@ -22,9 +22,15 @@ public class Vol {
      * Constructeur
      * @param numero
      */
-    protected Vol(String numero){
+    public Vol(String numero, Date date1, Date date2) throws Exception {
         this.numero = numero;
         this.escales = new LinkedHashSet<>();
+        if (date1.getTime() < date2.getTime()){
+            this.dateDepart = date1;
+            this.dateArrivee = date2;
+        } else{
+            throw new Exception("Dates invalides.");
+        }
     }
 
     public Vol() {

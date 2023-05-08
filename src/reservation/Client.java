@@ -15,8 +15,9 @@ public class Client {
     /**
      * Fonction simple
      */
-    public Client(){
+    public Client(String n){
         this.ref = UUID.randomUUID().toString();
+        this.nom = n;
     }
 
     /**

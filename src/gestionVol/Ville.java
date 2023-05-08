@@ -35,7 +35,7 @@ public class Ville {
     }
 
     /**
-     * la méthode pour ajouter un aéroport qui dessert la ville
+     * Ajouter un aéroport qui dessert la ville
      * @param aeroport
      */
     public void ajouterAeroport(Aeroport aeroport) {
@@ -43,7 +43,7 @@ public class Ville {
     }
 
     /**
-     * la méthode pour obtenir les aéroports qui desservent la ville
+     * Obtenir les aéroports qui desservent la ville
      * @return
      */
     public Set<Aeroport> getAeroports() {
