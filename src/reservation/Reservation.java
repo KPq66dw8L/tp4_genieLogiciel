@@ -1,5 +1,7 @@
 package reservation;
 
+import gestionVol.Vol;
+
 import java.util.UUID;
 import java.time.ZonedDateTime ;
 
@@ -9,16 +11,18 @@ public class Reservation {
     private String uniqueID;
     private ZonedDateTime date;
     private boolean confirmed = false;
+    private final Vol vol;
 
     /**
      * Constructeur
      * @param clientRef
      */
-    public Reservation(String clientRef) {
+    public Reservation(String clientRef, Vol v) {
         this.uniqueID = UUID.randomUUID().toString();
         this.date = ZonedDateTime.now();
         this.client = clientRef;
         paiement();
+        this.vol = v; // TODO: gérer Passager et ajouter celui-ci dans Vol de manière bidirectionnel
     }
 
     /**

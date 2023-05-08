@@ -1,6 +1,5 @@
 import gestionVol.Compagnie;
 import gestionVol.Vol;
-import reservation.Association_Reservation_Vol;
 import reservation.Client;
 import reservation.Reservation;
 
@@ -54,18 +53,13 @@ public class Start {
             System.out.println(v.getNumero());
         }
 
-        // code pour créer des instances de Reservation et Vol
-        // et les associer dans une liste de Association_Reservation_Vol
-        List<Association_Reservation_Vol> associations = new ArrayList<>();
-
         // exemple:
         Client c1 = new Client("Pablo Escobar");
         c1.setContact("pablo@gmail.com");
         // Testing purpose: https://fossbytes.com/tools/credit-card-generator
         c1.setPaiement("4420543804729930");
-        Reservation r1 = new Reservation(c1.getReference());
         Vol v1 = new Vol("AF123", new Date(), new Date());
-        Association_Reservation_Vol a1 = new Association_Reservation_Vol(r1, v1);
-        associations.add(a1);
+        Reservation r1 = new Reservation(c1.getReference(), v1);
+
     }
 }
