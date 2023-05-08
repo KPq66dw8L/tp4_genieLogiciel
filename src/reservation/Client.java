@@ -9,7 +9,9 @@ public class Client {
     private String ref;
     private String creditCard;
     private String mailAddress;
-    private static final Pattern VALIDATION_VISA = Pattern.compile("/^4[0-9]{12}(?:[0-9]{3})?$/");
+    private static final Pattern VALIDATION_VISA = Pattern.compile("^4[0-9]{12}(?:[0-9]{3})?$");
+    private static final Pattern VALIDATION_MASTERCARD = Pattern.compile("^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$");
+    private static final Pattern VALIDATION_AMEX = Pattern.compile("^3[47][0-9]{13}$");
     private static final Pattern VALIDATION_MAIL = Pattern.compile("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
 
     /**
@@ -34,8 +36,10 @@ public class Client {
      * @throws IllegalArgumentException
      */
     public void setPaiement(String cc) throws IllegalArgumentException{
-        Matcher m = VALIDATION_VISA.matcher(cc);
-        if (!m.matches()){
+        Matcher m1 = VALIDATION_VISA.matcher(cc);
+        Matcher m2 = VALIDATION_MASTERCARD.matcher(cc);
+        Matcher m3 = VALIDATION_AMEX.matcher(cc);
+        if (!m1.matches() && !m2.matches() && !m3.matches()){
             throw new IllegalArgumentException("Credit Card not valid.");
         } else {
             this.creditCard = cc;

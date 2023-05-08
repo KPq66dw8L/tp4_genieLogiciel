@@ -53,13 +53,28 @@ public class Start {
             System.out.println(v.getNumero());
         }
 
-        // exemple:
+        // exemple VISA:
         Client c1 = new Client("Pablo Escobar");
         c1.setContact("pablo@gmail.com");
         // Testing purpose: https://fossbytes.com/tools/credit-card-generator
-        c1.setPaiement("4420543804729930");
-        Vol v1 = new Vol("AF123", new Date(), new Date());
+        c1.setPaiement("4272505668446363");
+        Vol v1 = new Vol("AF123", format.parse(dd), format.parse(da));
         Reservation r1 = new Reservation(c1.getReference(), v1);
+        if (r1.getClient() == c1.getReference()) {
+            System.out.println(c1.getNom());
+        }
+
+        //exemple MASTERCARD:
+        Client c2 = new Client("Julien Herbaux");
+        c2.setContact("julien@gmail.com");
+        c2.setPaiement("2483571672956135");
+        Reservation r2 = new Reservation(c2.getReference(), v1);
+
+        //exemple AMEX:
+        Client c3 = new Client("Axel Exposito");
+        c3.setContact("axel@gmail.com");
+        c3.setPaiement("377732303291515");
+        Reservation r3 = new Reservation(c3.getReference(), v1);
 
     }
 }
