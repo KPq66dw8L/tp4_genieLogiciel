@@ -70,22 +70,22 @@ public class Client {
         this.reservationsEffectuees.add(r);
     }
 
-    /**
-     * Ajoute une reservation à la liste existante, apres avoir clean la reservation et s'etre mis client dans celle-ci
-     * @param r 1 reservation
-     */
-    public void addReservationBidirectionnel(Reservation r){
-        r.annuler();
-        r.setClient(this);
-        r.paiement(this);
-        this.reservationsEffectuees.add(r);
-    }
+//    /**
+//     * Ajoute une reservation à la liste existante, apres avoir clean la reservation et s'etre mis client dans celle-ci
+//     * @param r 1 reservation
+//     */
+//    public void addReservation(Reservation r){
+//        r.annuler();
+//        r.setClient(this);
+//        r.paiement(this);
+//        this.reservationsEffectuees.add(r);
+//    }
 
     /**
      * Remplace la liste existante de réservation par une nouvelle liste, monodirectionnel.
      * @param r liste de reservations
      */
-    public void setReservations(ArrayList<Reservation> r){
+    public void setReservationsWithoutBidirectional(ArrayList<Reservation> r){
         this.reservationsEffectuees = r;
     }
 
@@ -93,15 +93,15 @@ public class Client {
      * Annule les reservations courantes du client, remplace sa liste de reservations courante par une nouvelle, et se met client dans ces reservations.
      * @param r liste de reservations
      */
-    public void setReservationsBidirectionnel(ArrayList<Reservation> r){
+    public void setReservations(ArrayList<Reservation> r){
         for (Reservation re : this.reservationsEffectuees){
             re.annuler();
         }
-        for (Reservation re : r){
-            re.annuler();
-            re.setClient(this);
-            re.paiement(this);
-        }
+//        for (Reservation re : r){
+//            re.annuler();
+//            re.setClient(this);
+//            re.paiement(this);
+//        }
         this.reservationsEffectuees = r;
     }
 

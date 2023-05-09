@@ -5,7 +5,7 @@ import gestionVol.Vol;
 import java.util.UUID;
 import java.time.ZonedDateTime ;
 
-public class Reservation {
+public final class Reservation {
 
     private String clientR;
     private final String uniqueID;
@@ -28,7 +28,7 @@ public class Reservation {
         this.uniqueID = UUID.randomUUID().toString();
         this.date = ZonedDateTime.now();
         this.clientR = client.getReference();
-        paiement(client);
+        this.paiement(client);
         this.vol = v;
     }
 
@@ -36,7 +36,7 @@ public class Reservation {
      * Effectue paiement == débite le client
      * @param client qui paye
      */
-    public void paiement(Client client){
+    private void paiement(Client client){
         if (client.getPaiement() != null && client.getReference() == this.clientR){
             this.payed = true;
         }
@@ -51,7 +51,7 @@ public class Reservation {
         if (!(c.getReference() == this.clientR)){
             throw new IllegalArgumentException("Wrong client.");
         }
-        if (c.getPaiement() != null || c.getNom() != null || c.getReference() != null){
+        if (c.getPaiement() != null && c.getNom() != null && c.getReference() != null && this.payed){
             this.confirmed = true;
             this.passager = new Passager(c.getNom()); // Réservation confirmée, donc passager du vol
         }
@@ -59,6 +59,7 @@ public class Reservation {
 
     /**
      * Si un client a deja confirmé sa reservation et annule() alors juste annulée. Sinon le client est 'remboursé' et sa réservation annulée.
+     * L'annulation rend la réservation inutilisable et invalide.
      */
     public void annuler(){
         if (!this.confirmed) {
@@ -71,32 +72,48 @@ public class Reservation {
     }
 
     /**
-     * Setter passager 1
-     * @param passager objet Passager
+     * Repond a la qst: est ce que la reservation est payee?
+     * @return payed boolean
      */
-    public void setPassager(Passager passager) {
-        if (this.confirmed){
-            this.passager = passager;
-        }
+    public boolean isPayed() {
+        return this.payed;
     }
 
     /**
-     * Setter passager 2
-     * @param c passager objet Client
+     * Repond a la qst: est ce que la reservation est confirmee?
+     * @return confirmed boolean
      */
-    public void setPassager(Client c){
-        if (this.confirmed){
-            this.passager = new Passager(c.getNom());
-        }
+    public boolean isConfirmed() {
+        return this.confirmed;
     }
 
-    /**
-     * Setter client
-     * @param client effectuant la réservation
-     */
-    public void setClient(Client client) {
-        this.clientR = client.getReference();
-    }
+//    /**
+//     * Setter passager 1
+//     * @param passager objet Passager
+//     */
+//    public void setPassager(Passager passager) {
+//        if (this.confirmed){
+//            this.passager = passager;
+//        }
+//    }
+//
+//    /**
+//     * Setter passager 2
+//     * @param c passager objet Client
+//     */
+//    public void setPassager(Client c){
+//        if (this.confirmed){
+//            this.passager = new Passager(c.getNom());
+//        }
+//    }
+
+//    /**
+//     * Setter client
+//     * @param client effectuant la réservation
+//     */
+//    public void setClient(Client client) {
+//        this.clientR = client.getReference();
+//    }
 
     /**
      * Getter passager
@@ -120,5 +137,37 @@ public class Reservation {
      */
     public String getClient() {
         return clientR;
+    }
+
+    /**
+     * Getter du vol de la reservation
+     * @return obj vol
+     */
+    public Vol getVol(){
+        return this.vol;
+    }
+
+    /**
+     * Getter client reference
+     * @return clientR
+     */
+    public String getClientR() {
+        return this.clientR;
+    }
+
+    /**
+     * Getter ID reservation
+     * @return uniqueID
+     */
+    public String getUniqueID() {
+        return this.uniqueID;
+    }
+
+    /**
+     * Getter date de la reservation
+     * @return date
+     */
+    public ZonedDateTime getDate() {
+        return this.date;
     }
 }
