@@ -4,22 +4,23 @@ public class Passager {
     private String nom;
 
     /**
-     * Constructeur
+     * Init le nom du passager
      */
-    public Passager () {
+    public Passager (String n) {
+        this.nom = n;
     }
 
     /**
-     * Fonction simple.
-     * @param nom
+     * Setter nom du passager
+     * @param nom String
      */
     public void setNom (String nom) {
         this.nom = nom;
     }
 
     /**
-     * Fonction simple.
-     * @return
+     * Getter nom du passager
+     * @return nom en String
      */
     public String getNom() {
         return this.nom;

@@ -7,66 +7,118 @@ import java.time.ZonedDateTime ;
 
 public class Reservation {
 
-    private String client;
-    private String uniqueID;
+    private String clientR;
+    private final String uniqueID;
     private ZonedDateTime date;
-    private boolean confirmed = false;
+    private boolean confirmed;
     private final Vol vol;
+    // Association avec Passager
+    private Passager passager;
+    private boolean payed;
 
     /**
-     * Constructeur
-     * @param clientRef
+     * Init la confirmation et le paiement de la reservation a false, init ID, init date de reservation, recupere reference client et le vol,
+     * tente d'effectuer le paiement
+     * @param client qui effectue la reservation
+     * @param v = vol associé à la réservation
      */
-    public Reservation(String clientRef, Vol v) {
+    public Reservation(Client client, Vol v) {
+        this.confirmed = false;
+        this.payed = false;
         this.uniqueID = UUID.randomUUID().toString();
         this.date = ZonedDateTime.now();
-        this.client = clientRef;
-        paiement();
-        this.vol = v; // TODO: gérer Passager et ajouter celui-ci dans Vol de manière bidirectionnel
+        this.clientR = client.getReference();
+        paiement(client);
+        this.vol = v;
     }
 
     /**
-     * TODO: debiter le client, se fait lors de la creation de la reservation
+     * Effectue paiement == débite le client
+     * @param client qui paye
      */
-    public void paiement(){
-
+    public void paiement(Client client){
+        if (client.getPaiement() != null && client.getReference() == this.clientR){
+            this.payed = true;
+        }
     }
 
     /**
-     * TODO: confirmation automatique X temps avant le vol?? ou plus simple?
-     * Confirmation de la reservation, apres avoir paye et avant le vol
-     * @param c
+     * Confirmation de la reservation, apres avoir paye.
+     * @param c qui confirme
      * @throws IllegalArgumentException
      */
     public void confirmer(Client c) throws IllegalArgumentException {
-        if (!(c.getReference() == this.client)){
+        if (!(c.getReference() == this.clientR)){
             throw new IllegalArgumentException("Wrong client.");
         }
         if (c.getPaiement() != null || c.getNom() != null || c.getReference() != null){
             this.confirmed = true;
+            this.passager = new Passager(c.getNom()); // Réservation confirmée, donc passager du vol
         }
     }
 
     /**
-     * TODO: remboursement si avant confirmation, sinon juste annulation
+     * Si un client a deja confirmé sa reservation et annule() alors juste annulée. Sinon le client est 'remboursé' et sa réservation annulée.
      */
     public void annuler(){
+        if (!this.confirmed) {
+            this.payed = false; // remboursement
+        } else {
+            System.out.println("Ayant déjà confirmé votre réservation, votre réservation est annulée sans remboursement.");
+        }
+        this.passager = null;
         this.confirmed = false;
     }
 
     /**
-     * Fonction simple.
-     * @return
+     * Setter passager 1
+     * @param passager objet Passager
      */
-    public String getClient() {
-        return client;
+    public void setPassager(Passager passager) {
+        if (this.confirmed){
+            this.passager = passager;
+        }
+    }
+
+    /**
+     * Setter passager 2
+     * @param c passager objet Client
+     */
+    public void setPassager(Client c){
+        if (this.confirmed){
+            this.passager = new Passager(c.getNom());
+        }
+    }
+
+    /**
+     * Setter client
+     * @param client effectuant la réservation
+     */
+    public void setClient(Client client) {
+        this.clientR = client.getReference();
+    }
+
+    /**
+     * Getter passager
+     * @return passager
+     */
+    public Passager getPassager() {
+        return this.passager;
+    }
+
+    /**
+     * Getter du boolean de confirmation de la reservation
+     * @return état de confirmation
+     */
+    public boolean getConfirmer(){
+        return this.confirmed;
     }
 
     /**
      * Fonction simple.
-     * @param client
+     * @return reference client
      */
-    public void setClient(String client) {
-        this.client = client;
+    public String getClient() {
+        return clientR;
     }
 }

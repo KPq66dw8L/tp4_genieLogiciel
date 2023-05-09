@@ -17,6 +17,7 @@ public class Vol {
     private Date dateDepart;
     private Date dateArrivee;
     private boolean ouvert;
+    private Duration duree;
 
     /**
      * Constructeur
@@ -31,6 +32,7 @@ public class Vol {
         } else{
             throw new Exception("Dates invalides.");
         }
+        this.duree = obtenirDuree();
     }
 
     public Vol() {
@@ -38,14 +40,22 @@ public class Vol {
     }
 
     /**
-     * Equivalent d'un l'attribut dérivé 'duree' = durée du vol
+     * Calcul l'attribut dérivé 'duree' = durée du vol
      * @return duree
      */
-    public Duration obtenirDuree() {
+    private Duration obtenirDuree() {
         if(this.dateDepart != null && this.dateArrivee != null) {
             return Duration.of(dateArrivee.getTime() - dateDepart.getTime(), ChronoUnit.MILLIS);
         }
         return null;
+    }
+
+    /**
+     * Getter de durée
+     * @return duree
+     */
+    public Duration getDuree(){
+        return this.duree;
     }
 
     /**
@@ -58,14 +68,6 @@ public class Vol {
 
     /**
      * Simple fonction.
-     * @param dateDepart
-     */
-    public void setDateDepart(Date dateDepart) {
-        this.dateDepart = dateDepart;
-    }
-
-    /**
-     * Simple fonction.
      * @return
      */
     public Date getDateArrivee() {
@@ -73,11 +75,21 @@ public class Vol {
     }
 
     /**
-     * Simple fonction.
+     * Setter date départ du vol
+     * @param dateDepart
+     */
+    public void setDateDepart(Date dateDepart){
+        this.dateDepart = dateDepart;
+        this.duree = obtenirDuree();
+    }
+
+    /**
+     * Setter date d'arrivée du vol
      * @param dateArrivee
      */
-    public void setDateArrivee(Date dateArrivee) {
+    public void setDateArrivee(Date dateArrivee){
         this.dateArrivee = dateArrivee;
+        this.duree = obtenirDuree();
     }
 
     /**
