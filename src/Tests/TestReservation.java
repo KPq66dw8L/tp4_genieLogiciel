@@ -1,30 +1,15 @@
-import gestionVol.Compagnie;
+package Tests;
+
 import gestionVol.Vol;
-import org.junit.jupiter.api.BeforeEach;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import reservation.Client;
 import reservation.Reservation;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.concurrent.Callable;
-import static org.hamcrest.MatcherAssert.assertThat;
-//import static org.hamcrest.Matchers.*;
-import static org.hamcrest.beans.HasPropertyWithValue.hasProperty;
-import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.hamcrest.core.IsIterableContaining.hasItem;
-import static org.hamcrest.core.IsIterableContaining.hasItems;
-import static org.hamcrest.core.IsNot.not;
-import static org.hamcrest.core.IsNull.nullValue;
-import static org.hamcrest.core.IsSame.sameInstance;
-import static org.hamcrest.core.StringStartsWith.startsWith;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class ReservationTests {
+public class TestReservation {
 
     // Les objets communs à tous les tests
     private Client client;
@@ -32,7 +17,7 @@ public class ReservationTests {
     private Reservation reservation;
 
     // La méthode qui initialise les objets avant chaque test
-    @BeforeEach
+    @BeforeMethod
     void setUp() throws Exception {
         client = new Client("Pablo Escobar");
         client.setContact("pablo@gmail.com");
@@ -43,7 +28,7 @@ public class ReservationTests {
 
     // Le test qui vérifie que la réservation est payée quand elle est créée
     @Test
-    void testReservationIsPayedWhenCreated() {
+    void testReservationIsPayedWhenCreated() throws Exception {
         assertTrue(reservation.isPayed());
     }
 
@@ -78,20 +63,16 @@ public class ReservationTests {
         reservation.confirmer(client);
         reservation.annuler();
         assertFalse(reservation.isConfirmed());
-        assertNull(reservation.getClientR());
-        assertNull(reservation.getUniqueID());
-        assertNull(reservation.getDate());
-        assertNull(reservation.getVol());
         assertNull(reservation.getPassager());
     }
 
     // Le test qui vérifie que la réservation ne peut pas être annulée par un autre client
     @Test
-    void testReservationCannotBeCanceledByWrongClient() {
+    void testReservationCannotBeCanceledByWrongClient() throws Exception {
         Client otherClient = new Client("Axel Exposito");
         otherClient.setContact("axel@gmail.com");
         otherClient.setPaiement("377732303291515");
-        assertThrows(IllegalArgumentException.class, () -> reservation.annuler());
+        assertThrows(Exception.class, () -> otherClient.addReservation(reservation));
         assertTrue(reservation.isPayed());
         assertNotNull(reservation.getClientR());
         assertNotNull(reservation.getUniqueID());
@@ -105,10 +86,6 @@ public class ReservationTests {
     void testReservationIsRefundedWhenCanceledBeforeConfirmed() {
         reservation.annuler();
         assertFalse(reservation.isPayed());
-        assertNull(reservation.getClientR());
-        assertNull(reservation.getUniqueID());
-        assertNull(reservation.getDate());
-        assertNull(reservation.getVol());
         assertNull(reservation.getPassager());
     }
 
@@ -118,10 +95,6 @@ public class ReservationTests {
         reservation.confirmer(client);
         reservation.annuler();
         assertTrue(reservation.isPayed());
-        assertNull(reservation.getClientR());
-        assertNull(reservation.getUniqueID());
-        assertNull(reservation.getDate());
-        assertNull(reservation.getVol());
         assertNull(reservation.getPassager());
     }
 

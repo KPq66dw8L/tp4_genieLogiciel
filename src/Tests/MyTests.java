@@ -1,3 +1,4 @@
+package Tests;
 
 import gestionVol.Compagnie;
 import gestionVol.Vol;

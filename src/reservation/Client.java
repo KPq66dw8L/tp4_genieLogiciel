@@ -66,8 +66,12 @@ public class Client {
      * Ajoute une réservation à la liste existante.
      * @param r 1 reservation
      */
-    public void addReservation(Reservation r){
-        this.reservationsEffectuees.add(r);
+    public void addReservation(Reservation r) throws Exception {
+        if (r.getClient().equals(this.ref)){
+            this.reservationsEffectuees.add(r);
+        } else {
+            throw new Exception("Reservation appartient a un autre client.");
+        }
     }
 
 //    /**

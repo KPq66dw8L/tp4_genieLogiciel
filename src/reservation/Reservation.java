@@ -22,14 +22,18 @@ public final class Reservation {
      * @param client qui effectue la reservation
      * @param v = vol associé à la réservation
      */
-    public Reservation(Client client, Vol v) {
+    public Reservation(Client client, Vol v) throws Exception {
         this.confirmed = false;
         this.payed = false;
         this.uniqueID = UUID.randomUUID().toString();
         this.date = ZonedDateTime.now();
         this.clientR = client.getReference();
-        this.paiement(client);
-        this.vol = v;
+        paiement(client);
+        if (v.isOuvert()){
+            this.vol = v;
+        } else {
+            throw new Exception("Vol fermé, impossible de réserver pour ce vol.");
+        }
     }
 
     /**

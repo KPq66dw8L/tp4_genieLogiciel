@@ -74,6 +74,13 @@ public class Vol {
     }
 
     /**
+     * Repond a la question: est ce que le vol est ouvert?
+     */
+    public boolean isOuvert(){
+        return this.ouvert;
+    }
+
+    /**
      * Setter reservations sans bidirection (le vol ne se retire pas des reservations précédentes)
      */
     public void setReservationsWithoutBidirectional(HashSet<Reservation> rs){
@@ -144,7 +151,7 @@ public class Vol {
      * Change la company du vol, sans retirer le vol de la liste de vols de la company précédente et sans s'ajouter dans la nouvelle company.
      * @param compagnie nouvelle
      */
-    protected void setCompagnieWithoutBidirectional(Compagnie compagnie) {
+    public void setCompagnieWithoutBidirectional(Compagnie compagnie) {
         this.compagnie = compagnie;
     }
 
