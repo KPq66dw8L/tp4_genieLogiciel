@@ -18,7 +18,8 @@ public class Start {
         String da = "23/10/2020 02:15";
 
         try {
-            volFinal.setDates(format.parse(dd), format.parse(da));
+            volFinal.setDateDepart(format.parse(dd));
+            volFinal.setDateArrivee(format.parse(da));
         } catch (Exception e){
             throw new RuntimeException("Unable to format to date");
         }
