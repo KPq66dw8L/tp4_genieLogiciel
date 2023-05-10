@@ -2,14 +2,15 @@ package reservation;
 
 import gestionVol.Vol;
 
+import java.util.Objects;
 import java.util.UUID;
 import java.time.ZonedDateTime ;
 
 public final class Reservation {
 
-    private String clientR;
+    private final String clientR;
     private final String uniqueID;
-    private ZonedDateTime date;
+    private final ZonedDateTime date;
     private boolean confirmed;
     private final Vol vol;
     // Association avec Passager
@@ -41,7 +42,7 @@ public final class Reservation {
      * @param client qui paye
      */
     private void paiement(Client client){
-        if (client.getPaiement() != null && client.getReference() == this.clientR){
+        if (client.getPaiement() != null && Objects.equals(client.getReference(), this.clientR)){
             this.payed = true;
         }
     }
@@ -79,7 +80,7 @@ public final class Reservation {
     }
 
     /**
-     * Repond a la qst: est ce que la reservation est payee?
+     * Repond a la qst: est ce que la reservation est payée?
      * @return payed boolean
      */
     public boolean isPayed() {
