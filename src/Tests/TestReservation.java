@@ -40,7 +40,7 @@ public class TestReservation {
 
     // Le test qui vérifie que la réservation peut être confirmée par le bon client
     @Test
-    void testReservationCanBeConfirmedByRightClient() {
+    void testReservationCanBeConfirmedByRightClient() throws Exception {
         reservation.confirmer(client);
         assertTrue(reservation.isConfirmed());
         assertNotNull(reservation.getPassager());
@@ -59,7 +59,7 @@ public class TestReservation {
     }
     // Le test qui vérifie que la réservation peut être annulée par le bon client
     @Test
-    void testReservationCanBeCanceledByRightClient() {
+    void testReservationCanBeCanceledByRightClient() throws Exception {
         reservation.confirmer(client);
         reservation.annuler();
         assertFalse(reservation.isConfirmed());
@@ -91,7 +91,7 @@ public class TestReservation {
 
     // Le test qui vérifie que la réservation n'est pas remboursée quand elle est annulée après avoir été confirmée
     @Test
-    void testReservationIsNotRefundedWhenCanceledAfterConfirmed() {
+    void testReservationIsNotRefundedWhenCanceledAfterConfirmed() throws Exception {
         reservation.confirmer(client);
         reservation.annuler();
         assertTrue(reservation.isPayed());

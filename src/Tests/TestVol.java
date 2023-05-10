@@ -22,7 +22,7 @@ public class TestVol {
         Assert.assertEquals(vol.getDuree(), Duration.ofHours(2));
     }
     @Test
-    public void testFermer() {
+    public void testFermer() throws Exception {
         Vol vol = new Vol();
         vol.ouvrir();
         vol.fermer();

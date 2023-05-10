@@ -47,17 +47,20 @@ public final class Reservation {
     }
 
     /**
-     * Confirmation de la reservation, apres avoir paye.
+     * Confirmation de la reservation, apres avoir paye, on doit fournir le client pour certifier que le client n'a rien changé de son compte, sinon la réservation
+     * pourrait changer.
      * @param c qui confirme
      * @throws IllegalArgumentException
      */
-    public void confirmer(Client c) throws IllegalArgumentException {
+    public void confirmer(Client c) throws Exception {
         if (!(c.getReference() == this.clientR)){
             throw new IllegalArgumentException("Wrong client.");
         }
-        if (c.getPaiement() != null && c.getNom() != null && c.getReference() != null && this.payed){
+        if (c.getPaiement() != null && c.getNom() != null && c.getReference() != null && this.payed && this.vol.isOuvert()){
             this.confirmed = true;
             this.passager = new Passager(c.getNom()); // Réservation confirmée, donc passager du vol
+        } else {
+            throw new Exception("Impossible de confimer. Vous n'avez peut-etre pas paye, ou votre compte est incomplet, ou le vol est fermé.");
         }
     }
 

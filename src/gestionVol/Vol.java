@@ -20,11 +20,6 @@ public class Vol {
     private Duration duree;
     private HashSet<Reservation> reservations;
 
-    public Vol() {
-        this.escales = new LinkedHashSet<>();
-        this.reservations = new HashSet<>();
-    }
-
     /**
      * Init:
      * - ID du vol
@@ -46,6 +41,13 @@ public class Vol {
         }
         this.duree = obtenirDuree();
         this.reservations = new HashSet<>();
+        this.ouvert = false;
+    }
+
+    public Vol() {
+        this.escales = new LinkedHashSet<>();
+        this.reservations = new HashSet<>();
+        this.ouvert = false;
     }
 
     /**
@@ -62,12 +64,22 @@ public class Vol {
     /**
      * Ouvre le vol
      */
-    public void ouvrir(){
-        this.ouvert = true;
+    public void ouvrir() throws Exception {
+        if (this.numero != null && this.depart != null && this.arrivee != null && this.compagnie != null && this.dateDepart != null && this.dateArrivee != null){
+            this.ouvert = true;
+        } else{
+            throw new Exception("Le vol n'est pas valide. Il manque une des composantes du vol parmi les suivantes: " +
+                    "numéro de vol, " +
+                    "aéroport de départ, " +
+                    "aéroport d'arrivée, " +
+                    "compagnie du vol, " +
+                    "date de départ, " +
+                    "date d'arrivée.");
+        }
     }
 
     /**
-     * Ferme le vol
+     * Ferme le vol. Il est recommandé d'annuler les réservations faites après avoir fermé un vol en utilisant setReservations().
      */
     public void fermer() {
         this.ouvert = false;
@@ -81,25 +93,33 @@ public class Vol {
     }
 
     /**
-     * Setter reservations sans bidirection (le vol ne se retire pas des reservations précédentes)
+     * Setter reservations sans bidirection (le vol ne se retire pas des reservations précédentes). Indisponible si le vol est fermé.
      */
-    public void setReservationsWithoutBidirectional(HashSet<Reservation> rs){
-        this.reservations = rs;
+    public void setReservationsWithoutBidirectional(HashSet<Reservation> rs) throws Exception {
+        if (this.ouvert){
+            this.reservations = rs;
+        } else {
+            throw new Exception("Vol fermé impossible de faire de réservation.");
+        }
     }
 
     /**
-     * Annule les reservations courantes et les remplace par une nouvelle liste de reservations.
+     * Annule les reservations courantes et les remplace par une nouvelle liste de reservations. Indisponible si le vol est fermé.
      * @param rs set de reservations
      */
-    public void setReservations(HashSet<Reservation> rs){
-        for (Reservation r : this.reservations){
-            r.annuler();
-        }
-        this.reservations = rs;
-        for (Reservation r : rs){
-            if (r.getPassager() == null){
-                this.reservations = new HashSet<>();
+    public void setReservations(HashSet<Reservation> rs) throws Exception {
+        if (this.ouvert){
+            for (Reservation r : this.reservations){
+                r.annuler();
             }
+            this.reservations = rs;
+            for (Reservation r : rs){
+                if (r.getPassager() == null){
+                    this.reservations = new HashSet<>();
+                }
+            }
+        } else {
+            throw new Exception("Vol fermé impossible de faire de réservation.");
         }
     }
 
