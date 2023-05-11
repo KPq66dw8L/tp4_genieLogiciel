@@ -16,6 +16,7 @@ public final class Reservation {
     // Association avec Passager
     private Passager passager;
     private boolean payed;
+    private boolean valide;
 
     /**
      * Init la confirmation et le paiement de la reservation a false, init ID, init date de reservation, recupere reference client et le vol,
@@ -24,6 +25,7 @@ public final class Reservation {
      * @param v = vol associé à la réservation
      */
     public Reservation(Client client, Vol v) throws Exception {
+        this.valide = true;
         this.confirmed = false;
         this.payed = false;
         this.uniqueID = UUID.randomUUID().toString();
@@ -41,9 +43,12 @@ public final class Reservation {
      * Effectue paiement == débite le client
      * @param client qui paye
      */
-    private void paiement(Client client){
+    private void paiement(Client client) throws Exception {
         if (client.getPaiement() != null && Objects.equals(client.getReference(), this.clientR)){
             this.payed = true;
+        } else {
+            this.annuler();
+            throw new Exception("Paiement impossible");
         }
     }
 
@@ -77,6 +82,7 @@ public final class Reservation {
         }
         this.passager = null;
         this.confirmed = false;
+        this.valide = false;
     }
 
     /**
@@ -177,5 +183,13 @@ public final class Reservation {
      */
     public ZonedDateTime getDate() {
         return this.date;
+    }
+
+    /**
+     * Permet de savoir si la réservation a été annulée (si valide est false).
+     * @return valide
+     */
+    public boolean getValide(){
+        return this.valide;
     }
 }

@@ -11,6 +11,7 @@ import reservation.Client;
 import reservation.Reservation;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 
 import static org.testng.Assert.*;
 
@@ -19,7 +20,11 @@ public class TestClient {
     Client c1;
     Client c2;
     Client c3;
+    Client c4;
     Reservation r1;
+    Reservation r2;
+    Reservation r3;
+    Reservation r4;
 
     @BeforeMethod
     public void initsClients(){
@@ -30,6 +35,7 @@ public class TestClient {
     @BeforeGroups("Contient vol")
     public void initsVol() throws Exception {
         c3 = new Client("Pablo");
+        c4 = new Client("Pablo");
 
         Compagnie cm1 = new Compagnie().setName("Compagnie 1");
         Vol v1 = new Vol("AF11", ZonedDateTime.now(), ZonedDateTime.now().plusHours(2));
@@ -39,7 +45,12 @@ public class TestClient {
         v1.setDepart(a11);
         v1.setArrivee(a12);
         v1.ouvrir();
+        c3.setPaiement("4272505668446363");
+        c4.setPaiement("4272505668446363");
         r1 = new Reservation(c3, v1);
+        r2 = new Reservation(c4, v1);
+        r3 = new Reservation(c4, v1);
+        r4 = new Reservation(c4, v1);
     }
 
     @Test
@@ -86,5 +97,28 @@ public class TestClient {
         assertThrows(Exception.class, () -> c1.addReservation(r1));
     }
 
+    @Test(groups= {"Contient vol"})
+    public void testSetReservationsWithoutBidirectional(){
+        ArrayList<Reservation> nv = new ArrayList<>();
+        c3.setReservationsWithoutBidirectional(nv);
+        assertEquals(c3.getReservations().size(), 0);
+        assertEquals(r1.getClient(), c3.getReference());
+        assertTrue(r1.getValide());
+    }
 
+    @Test(groups= {"Contient vol"})
+    public void testSetReservations() throws Exception {
+        c4.addReservation(r3);
+        c4.addReservation(r4);
+        assertTrue(c4.getReservations().size() > 1);
+    }
+
+    @Test(groups= {"Contient vol"})
+    public void testMultipleReservationsPourUnClient() throws Exception {
+        c4.addReservation(r2);
+        ArrayList<Reservation> nv = new ArrayList<>();
+        c4.setReservations(nv);
+        assertEquals(c4.getReservations().size(), 0);
+        assertFalse(r2.getValide());
+    }
 }
