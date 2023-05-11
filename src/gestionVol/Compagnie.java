@@ -6,12 +6,13 @@ import java.util.Collection;
 public class Compagnie {
 
     private String name;
-    private Collection<Vol> vols = new ArrayList<>();
+    private Collection<Vol> vols;
 
     /**
      * Constructeur
      */
     public Compagnie() {
+        vols = new ArrayList<>();
     }
 
     /**
@@ -24,10 +25,12 @@ public class Compagnie {
 
     /**
      * Simple function
-     * @param name
+     * @param name String
+     * @return this, pour pouvoir faire : Compagnie cm1 = new Compagnie().setName("Compagnie 1")
      */
-    public void setName(String name) {
+    public Compagnie setName(String name) {
         this.name = name;
+        return this;
     }
 
     /**

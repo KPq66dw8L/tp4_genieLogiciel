@@ -65,7 +65,12 @@ public class Vol {
      * Ouvre le vol
      */
     public void ouvrir() throws Exception {
-        if (this.numero != null && this.depart != null && this.arrivee != null && this.compagnie != null && this.dateDepart != null && this.dateArrivee != null){
+        if (    this.numero != null &&
+                this.depart != null &&
+                this.arrivee != null &&
+                this.compagnie != null &&
+                this.dateDepart != null &&
+                this.dateArrivee != null){
             this.ouvert = true;
         } else{
             throw new Exception("Le vol n'est pas valide. Il manque une des composantes du vol parmi les suivantes: " +

@@ -8,8 +8,8 @@ import java.util.regex.Matcher;
 public class Client {
     private String nom;
     private final String ref;
-    private String creditCard;
-    private String mailAddress;
+    private String creditCard; //paiement
+    private String mailAddress; //contact
     private ArrayList<Reservation> reservationsEffectuees;
     private static final Pattern VALIDATION_VISA = Pattern.compile("^4[0-9]{12}(?:[0-9]{3})?$");
     private static final Pattern VALIDATION_MASTERCARD = Pattern.compile("^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$");
