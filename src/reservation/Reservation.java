@@ -32,7 +32,7 @@ public final class Reservation {
         this.clientR = client.getReference();
         paiement(client);
         if (v.isOuvert()){
-            this.vol = v;
+            this.vol = v; // la reservation n'set cpd pas encore dans la liste des reservations de Vol, car elle n'est pas confirmée
         } else {
             throw new Exception("Vol fermé, impossible de réserver pour ce vol.");
         }
@@ -59,19 +59,20 @@ public final class Reservation {
      * @throws Exception 2eme condition non remplie
      */
     public void confirmer(Client c) throws Exception {
-        if (!(c.getReference() == this.clientR)){
+        if (!(Objects.equals(c.getReference(), this.clientR))){
             throw new IllegalArgumentException("Wrong client.");
         }
         if (c.getPaiement() != null && c.getNom() != null && c.getReference() != null && this.payed && this.vol.isOuvert()){
             this.confirmed = true;
             this.passager = new Passager(c.getNom()); // Réservation confirmée, donc passager du vol
+            this.vol.addReservation(this);
         } else {
             throw new Exception("Impossible de confimer. Vous n'avez peut-etre pas paye, ou votre compte est incomplet, ou le vol est fermé.");
         }
     }
 
     /**
-     * Si un client a deja confirmé sa reservation et annule() alors juste annulée. Sinon le client est 'remboursé' et sa réservation annulée.
+     * Si un client a deja confirmé sa reservation puis annule() alors juste annulée. Sinon le client est 'remboursé' et sa réservation annulée.
      * L'annulation rend la réservation inutilisable et invalide.
      */
     public void annuler(){
@@ -101,6 +102,13 @@ public final class Reservation {
         return this.confirmed;
     }
 
+    /**
+     * Reservation devient invalide lorsqu'elle est annulée.
+     * @return boolean
+     */
+    public boolean isValide(){
+        return this.valide;
+    }
 //    /**
 //     * Setter passager 1
 //     * @param passager objet Passager

@@ -67,10 +67,10 @@ public class Client {
      * @param r 1 reservation
      */
     public void addReservation(Reservation r) throws Exception {
-        if (r.getClient().equals(this.ref)){
+        if (r.getClient().equals(this.ref) && r.isValide()){
             this.reservationsEffectuees.add(r);
         } else {
-            throw new Exception("Reservation appartient a un autre client.");
+            throw new Exception("Reservation appartient a un autre client, ou réservation invalide.");
         }
     }
 

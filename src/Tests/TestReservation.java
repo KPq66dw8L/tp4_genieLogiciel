@@ -23,8 +23,10 @@ public class TestReservation {
 
     Client c1;
     Client c2;
+    Client c3;
     Reservation r1;
     Reservation r2;
+    Reservation r3;
     Vol v1;
     Vol v2;
 
@@ -32,6 +34,7 @@ public class TestReservation {
     public void inits() throws Exception {
         c1 = new Client("Pablo");
         c2 = new Client("Pablo - pas de moyen de paiement");
+        c3 = new Client("Pablo");
         Compagnie cm1 = new Compagnie().setName("Compagnie 1");
         v1 = new Vol("AF11 - vol ouvert", ZonedDateTime.now(), ZonedDateTime.now().plusHours(2));
         v2 = new Vol("AF12 - vol fermé", ZonedDateTime.now(), ZonedDateTime.now().plusHours(2));
@@ -45,6 +48,7 @@ public class TestReservation {
         v2.setArrivee(a12);
         v1.ouvrir();
         c1.setPaiement("4272505668446363");
+        c3.setPaiement("4272505668446363");
     }
 
     @Test
@@ -72,8 +76,20 @@ public class TestReservation {
     }
 
     @Test
-    public void testAnnuler(){
+    public void testAnnuler() throws Exception {
+        r1 = new Reservation(c1, v1);
+        assertTrue(r1.isPayed());
+        r1.annuler();
+        assertFalse(r1.isValide());
+        assertFalse(r1.isPayed()); // réservation remboursée car annulée avant confirmation
 
+        r3 = new Reservation(c3, v1);
+        r3.confirmer(c3);
+        assertTrue(r3.isConfirmed());
+        assertTrue(r3.isPayed());
+        r3.annuler();
+        assertTrue(r3.isPayed());
+        assertFalse(r3.isValide());
     }
 
 }

@@ -133,28 +133,56 @@ public class Vol {
      * sont bien confirmées avant d'etre comptabilisees dans le vol.
      * @param r 1 reservation
      */
-    public void addReservation(Reservation r){
+    public void addReservation(Reservation r) throws Exception {
+        if (!this.ouvert){
+            throw new Exception("Impossible de réserver, le vol est fermé.");
+        }
         if (r.getPassager() != null && r.getVol().equals(this)){
             this.reservations.add(r);
+        } else {
+            throw new Exception("Pas de passager lié à cette réservation ou vol de la réservation différent de ce vol.");
         }
     }
 
     /**
      * Setter date départ du vol
      * @param dateDepart Date
+     * @return
      */
-    public void setDateDepart(ZonedDateTime dateDepart){
-        this.dateDepart = dateDepart;
-        this.duree = obtenirDuree();
+    public Vol setDateDepart(ZonedDateTime dateDepart) throws Exception {
+        if (dateArrivee != null ){
+            if (dateDepart.compareTo(dateArrivee) < 0){
+                this.dateDepart = dateDepart;
+                this.duree = obtenirDuree();
+                return this;
+            } else {
+                throw new Exception("Date de départ invalide.");
+            }
+        } else {
+            this.dateDepart = dateDepart;
+            return this;
+        }
     }
 
     /**
      * Setter date d'arrivée du vol
      * @param dateArrivee Date
+     * @param dateArrivee Date
+     * @return
      */
-    public void setDateArrivee(ZonedDateTime dateArrivee){
-        this.dateArrivee = dateArrivee;
-        this.duree = obtenirDuree();
+    public Vol setDateArrivee(ZonedDateTime dateArrivee) throws Exception {
+        if (dateDepart != null ){
+            if (dateDepart.compareTo(dateArrivee) < 0){
+                this.dateArrivee = dateArrivee;
+                this.duree = obtenirDuree();
+                return this;
+            } else {
+                throw new Exception("Date d'arrivée' invalide.");
+            }
+        } else {
+            this.dateArrivee = dateArrivee;
+            return this;
+        }
     }
 
     /**
