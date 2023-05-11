@@ -1,5 +1,7 @@
 package Tests;
 
+import gestionVol.Aeroport;
+import gestionVol.Compagnie;
 import gestionVol.Vol;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -7,106 +9,71 @@ import reservation.Client;
 import reservation.Reservation;
 import java.time.ZonedDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.testng.Assert.*;
+
 
 public class TestReservation {
 
-//    // Les objets communs à tous les tests
-//    private Client client;
-//    private Vol vol;
-//    private Reservation reservation;
-//
-//    // La méthode qui initialise les objets avant chaque test
-//    @BeforeMethod
-//    void setUp() throws Exception {
-//        client = new Client("Pablo Escobar");
-//        client.setContact("pablo@gmail.com");
-//        client.setPaiement("4272505668446363");
-//        vol = new Vol("AF123", ZonedDateTime.parse("2020-10-21T13:00:00+02:00"), ZonedDateTime.parse("2020-10-23T02:15:00+02:00"));
-//        reservation = new Reservation(client, vol);
-//    }
-//
-//    // Le test qui vérifie que la réservation est payée quand elle est créée
-//    @Test
-//    void testReservationIsPayedWhenCreated() throws Exception {
-//        assertTrue(reservation.isPayed());
-//    }
-//
-//    // Le test qui vérifie que la réservation n'est pas confirmée quand elle est créée
-//    @Test
-//    void testReservationIsNotConfirmedWhenCreated() {
-//        assertFalse(reservation.isConfirmed());
-//    }
-//
-//    // Le test qui vérifie que la réservation peut être confirmée par le bon client
-//    @Test
-//    void testReservationCanBeConfirmedByRightClient() throws Exception {
-//        reservation.confirmer(client);
-//        assertTrue(reservation.isConfirmed());
-//        assertNotNull(reservation.getPassager());
-//        assertEquals(client.getNom(), reservation.getPassager().getNom());
-//    }
-//
-//    // Le test qui vérifie que la réservation ne peut pas être confirmée par un autre client
-//    @Test
-//    void testReservationCannotBeConfirmedByWrongClient() {
-//        Client otherClient = new Client("Julien Herbaux");
-//        otherClient.setContact("julien@gmail.com");
-//        otherClient.setPaiement("2483571672956135");
-//        assertThrows(IllegalArgumentException.class, () -> reservation.confirmer(otherClient));
-//        assertFalse(reservation.isConfirmed());
-//        assertNull(reservation.getPassager());
-//    }
-//    // Le test qui vérifie que la réservation peut être annulée par le bon client
-//    @Test
-//    void testReservationCanBeCanceledByRightClient() throws Exception {
-//        reservation.confirmer(client);
-//        reservation.annuler();
-//        assertFalse(reservation.isConfirmed());
-//        assertNull(reservation.getPassager());
-//    }
-//
-//    // Le test qui vérifie que la réservation ne peut pas être annulée par un autre client
-//    @Test
-//    void testReservationCannotBeCanceledByWrongClient() throws Exception {
-//        Client otherClient = new Client("Axel Exposito");
-//        otherClient.setContact("axel@gmail.com");
-//        otherClient.setPaiement("377732303291515");
-//        assertThrows(Exception.class, () -> otherClient.addReservation(reservation));
-//        assertTrue(reservation.isPayed());
-//        assertNotNull(reservation.getClientR());
-//        assertNotNull(reservation.getUniqueID());
-//        assertNotNull(reservation.getDate());
-//        assertNotNull(reservation.getVol());
-//        assertNull(reservation.getPassager());
-//    }
-//
-//    // Le test qui vérifie que la réservation est remboursée quand elle est annulée avant d'être confirmée
-//    @Test
-//    void testReservationIsRefundedWhenCanceledBeforeConfirmed() {
-//        reservation.annuler();
-//        assertFalse(reservation.isPayed());
-//        assertNull(reservation.getPassager());
-//    }
-//
-//    // Le test qui vérifie que la réservation n'est pas remboursée quand elle est annulée après avoir été confirmée
-//    @Test
-//    void testReservationIsNotRefundedWhenCanceledAfterConfirmed() throws Exception {
-//        reservation.confirmer(client);
-//        reservation.annuler();
-//        assertTrue(reservation.isPayed());
-//        assertNull(reservation.getPassager());
-//    }
-//
-//    // Le test qui vérifie que la réservation renvoie bien la référence du client
-//    @Test
-//    void testReservationReturnsClientReference() {
-//        assertEquals(client.getReference(), reservation.getClient());
-//    }
-//
-//    // Le test qui vérifie que la réservation renvoie bien le vol associé
-//    @Test
-//    void testReservationReturnsVol() {
-//        assertEquals(vol, reservation.getVol());
-//    }
+    /**
+     * Pour voir les OUTPUT des @Test et obtenir le lien du rapport HTML des tests:
+     * ./gradlew.bat test --info --rerun-tasks
+     * Si probleme de cache:
+     * ./gradlew.bat cleanTest --info --rerun-tasks
+     */
+
+    Client c1;
+    Client c2;
+    Reservation r1;
+    Reservation r2;
+    Vol v1;
+    Vol v2;
+
+    @BeforeMethod
+    public void inits() throws Exception {
+        c1 = new Client("Pablo");
+        c2 = new Client("Pablo - pas de moyen de paiement");
+        Compagnie cm1 = new Compagnie().setName("Compagnie 1");
+        v1 = new Vol("AF11 - vol ouvert", ZonedDateTime.now(), ZonedDateTime.now().plusHours(2));
+        v2 = new Vol("AF12 - vol fermé", ZonedDateTime.now(), ZonedDateTime.now().plusHours(2));
+        cm1.addVol(v1);
+        cm1.addVol(v2);
+        Aeroport a11 = new Aeroport("Aéroport départ");
+        Aeroport a12 = new Aeroport("Aéroport arrivé");
+        v1.setDepart(a11);
+        v1.setArrivee(a12);
+        v2.setDepart(a11);
+        v2.setArrivee(a12);
+        v1.ouvrir();
+        c1.setPaiement("4272505668446363");
+    }
+
+    @Test
+    public void testReservations() throws Exception {
+        r1 = new Reservation(c1, v1);
+        assertEquals(r1.getClient(), c1.getReference());
+
+        assertThrows(Exception.class, () -> r2 = new Reservation(c1, v2)); // Vol non ouvert, donc impossible de réserver
+        assertThrows(Exception.class, () -> r2 = new Reservation(c2, v1)); // Impossible de débiter le client, donc impossible de réserver
+    }
+
+    @Test
+    public void testConfirmer() throws Exception {
+        r1 = new Reservation(c1, v1);
+        assertThrows(IllegalArgumentException.class, () -> r1.confirmer(c2)); // Mauvais client, empêche de vérifier que les informations client sont toujours completes
+        v2.ouvrir();
+        r1 = new Reservation(c1, v2); // On peut créer la reservation car le vol est mtn ouvert
+        v2.fermer();
+        assertThrows(Exception.class, () -> r1.confirmer(c2)); // Impossible de confirmer, le vol est fermé
+
+        r1 = new Reservation(c1, v1);
+        assertNull(r1.getPassager()); // Pas encore assigné comme passager car non confirmé
+        r1.confirmer(c1);
+        assertNotNull(r1.getPassager()); // Passager après confirmation
+    }
+
+    @Test
+    public void testAnnuler(){
+
+    }
+
 }

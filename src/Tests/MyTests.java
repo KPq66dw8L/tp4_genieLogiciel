@@ -29,8 +29,10 @@ import static org.hamcrest.core.StringStartsWith.startsWith;
 public class MyTests {
 
     /**
-     * Pour voir les OUTPUT des @Test:
+     * Pour voir les OUTPUT des @Test et obtenir le lien du rapport HTML des tests:
      * ./gradlew.bat test --info --rerun-tasks
+     * Si probleme de cache:
+     * ./gradlew.bat cleanTest --info --rerun-tasks
      */
 
     String dd = "21/10/2020 13:00";

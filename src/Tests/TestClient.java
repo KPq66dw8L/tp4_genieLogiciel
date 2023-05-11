@@ -17,6 +17,13 @@ import static org.testng.Assert.*;
 
 public class TestClient {
 
+    /**
+     * Pour voir les OUTPUT des @Test et obtenir le lien du rapport HTML des tests:
+     * ./gradlew.bat test --info --rerun-tasks
+     * Si probleme de cache:
+     * ./gradlew.bat cleanTest --info --rerun-tasks
+     */
+
     Client c1;
     Client c2;
     Client c3;

@@ -9,11 +9,10 @@ import java.time.ZonedDateTime ;
 public final class Reservation {
 
     private final String clientR;
-    private final String uniqueID;
+    private final String uniqueID; //numero
     private final ZonedDateTime date;
     private boolean confirmed;
     private final Vol vol;
-    // Association avec Passager
     private Passager passager;
     private boolean payed;
     private boolean valide;
@@ -55,8 +54,9 @@ public final class Reservation {
     /**
      * Confirmation de la reservation, apres avoir paye, on doit fournir le client pour certifier que le client n'a rien changé de son compte, sinon la réservation
      * pourrait changer.
-     * @param c qui confirme
-     * @throws IllegalArgumentException
+     * @param c pour la deuxieme condition
+     * @throws IllegalArgumentException 1ere condition non remplie
+     * @throws Exception 2eme condition non remplie
      */
     public void confirmer(Client c) throws Exception {
         if (!(c.getReference() == this.clientR)){
