@@ -1,3 +1,14 @@
+Vous trouverez dans le package Test un ensemble de tests pour chaque methodes, organisés par classes testées.
+Les tests sont fait à l'aide de la bibliotheque testng, voici plus d'informations sur comment run ces tests:
+
+    /**
+     * Pour voir les OUTPUT des @Test et obtenir le lien du rapport HTML des tests:
+     * ./gradlew.bat test --info --rerun-tasks
+     * Si probleme de cache:
+     * ./gradlew.bat cleanTest --info --rerun-tasks
+     */
+
+
 #Bonus
 
 Citation complete:

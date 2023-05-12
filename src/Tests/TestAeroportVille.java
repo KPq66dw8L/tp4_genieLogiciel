@@ -8,6 +8,13 @@ import static org.testng.Assert.*;
 
 public class TestAeroportVille {
 
+    /**
+     * Pour voir les OUTPUT des @Test et obtenir le lien du rapport HTML des tests:
+     * ./gradlew.bat test --info --rerun-tasks
+     * Si probleme de cache:
+     * ./gradlew.bat cleanTest --info --rerun-tasks
+     */
+
     @Test
     public void inits() throws Exception {
         Ville vi1 = new Ville("Paris");
