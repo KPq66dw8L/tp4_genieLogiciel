@@ -1,7 +1,5 @@
 package gestionVol;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -9,29 +7,29 @@ public class Aeroport {
 
     private String nom;
     private Ville ville;
-    private Set<Ville> dessert;
+    private Set<Ville> villesDesservies;
 
     /**
-     * Constructeur
+     * Init nom de l'aeroport et set des villes desservies
      */
     public Aeroport(String nom) {
         this.nom = nom;
-        this.dessert = new HashSet<>();
+        this.villesDesservies = new HashSet<>();
     }
     public Aeroport() {
-        this.dessert = new HashSet<>();
+        this.villesDesservies = new HashSet<>();
     }
 
     /**
-     * Simple fonction.
-     * @return nom de l'aeroport
+     * Ajouter une ville desservie
+     * @param ville
      */
-    public String getNom() {
-        return nom;
+    public void ajouterVilleDesservie(Ville ville) {
+        this.villesDesservies.add(ville);
     }
 
     /**
-     * Simple fonction.
+     * Setter nom de l'aeroport
      * @param nom
      */
     public void setNom(String nom) {
@@ -39,7 +37,32 @@ public class Aeroport {
     }
 
     /**
-     * Simple fonction.
+     * Setter de la ville de l'aeroport, ajoute aussi l'aeroport dans la liste de la ville.
+     * @param ville Ville
+     */
+    public void setVille(Ville ville) {
+        ville.ajouterAeroportWithoutBidirectional(this);
+        this.ville = ville;
+    }
+
+    /**
+     * Setter de la ville de l'aeroport.
+     * @param ville Ville
+     */
+    public void setVilleWithoutBidirectional(Ville ville) {
+        this.ville = ville;
+    }
+
+    /**
+     * Remplace le set de villes desservies par un nouveau
+     * @param nv
+     */
+    public void setVillesDesservies(HashSet<Ville> nv){
+        this.villesDesservies = nv;
+    }
+
+    /**
+     * Getter ville dans laquelle se trouve l'aeroport
      * @return le nom de la ville
      */
     public String getVille() {
@@ -47,26 +70,18 @@ public class Aeroport {
     }
 
     /**
-     * Simple fonction.
-     * @param ville
+     * Getter nom de l'aeroport
+     * @return nom de l'aeroport
      */
-    public void setVille(String ville) {
-        this.ville.setNom(ville);
+    public String getNom() {
+        return nom;
     }
 
     /**
-     * la méthode pour ajouter une ville desservie
-     * @param ville
-     */
-    public void ajouterVille(Ville ville) {
-        this.dessert.add(ville);
-    }
-
-    /**
-     * la méthode pour obtenir les villes desservies
-     * @return
+     * Getter des villes desservies
+     * @return set
      */
     public Set<Ville> getVilles() {
-        return this.dessert;
+        return this.villesDesservies;
     }
 }

@@ -9,14 +9,14 @@ public class Compagnie {
     private Collection<Vol> vols;
 
     /**
-     * Constructeur
+     * Init liste des vols
      */
     public Compagnie() {
         vols = new ArrayList<>();
     }
 
     /**
-     * Simple function
+     * Getter nom de la compagnie
      * @return name
      */
     public String getName() {
@@ -24,7 +24,7 @@ public class Compagnie {
     }
 
     /**
-     * Simple function
+     * Setter nom de la compagnie
      * @param name String
      * @return this, pour pouvoir faire : Compagnie cm1 = new Compagnie().setName("Compagnie 1")
      */
@@ -34,7 +34,7 @@ public class Compagnie {
     }
 
     /**
-     * Simple function
+     * Getter liste de vols
      * @return liste de vols de l'entreprise
      */
     public Collection<Vol> getVols() {
@@ -42,7 +42,7 @@ public class Compagnie {
     }
 
     /**
-     * Company se retire des vols actuels. Remplace la liste des vols. Se met company des vols de la nouvelle liste.
+     * Compagnie se retire des vols actuels. Remplace la liste des vols. Se met company des vols de la nouvelle liste.
      * @param vols
      */
     public void setVols(Collection<Vol> vols) {
@@ -87,7 +87,7 @@ public class Compagnie {
 
     /**
      * Ajoute un vol à la liste des vols, sans se mettre company de ce vol dans l'objet.
-     * @param vol
+     * @param vol a ajouter
      */
     protected void addVolWithoutBidirectional(Vol vol){
         this.vols.add(vol);
@@ -95,7 +95,7 @@ public class Compagnie {
 
     /**
      * Supprime un vol de la liste de vols, sans se retirer comme company de l'objet.
-     * @param vol
+     * @param vol a supprimer
      */
     protected void removeVolWithoutBidirectional(Vol vol){
         this.vols.remove(vol);

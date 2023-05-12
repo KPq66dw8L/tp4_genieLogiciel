@@ -98,4 +98,6 @@ public class TestVol {
         Escale e1 = new Escale(a).setDateDepart(ZonedDateTime.now().plusHours(1)).setDateArrivee(ZonedDateTime.now().plusHours(1).plusMinutes(30));
         v1.addEscale(e1);
     }
+
+
 }

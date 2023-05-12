@@ -16,7 +16,7 @@ public class Escale {
     /**
      * Setter date départ du vol
      * @param dateDepart Date
-     * @return
+     * @return this
      */
     public Escale setDateDepart(ZonedDateTime dateDepart) throws Exception {
         if (dateArrivee != null ){
@@ -36,7 +36,7 @@ public class Escale {
     /**
      * Setter date d'arrivée du vol
      * @param dateArrivee Date
-     * @return
+     * @return this
      */
     public Escale setDateArrivee(ZonedDateTime dateArrivee) throws Exception {
         if (dateDepart != null ){
@@ -75,7 +75,8 @@ public class Escale {
      */
     public Duration obtenirDuree() {
         if(this.dateDepart != null && this.dateArrivee != null) {
-            return Duration.between(dateDepart, dateArrivee);
+            this.duree = Duration.between(dateDepart, dateArrivee);
+            return this.duree;
         }
         return null;
     }
