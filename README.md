@@ -6,6 +6,8 @@ Les tests sont fait à l'aide de la bibliotheque testng, voici plus d'informatio
      * ./gradlew.bat test --info --rerun-tasks
      * Si probleme de cache:
      * ./gradlew.bat cleanTest --info --rerun-tasks
+     * Pour trouver le rapport manuellement:
+     * .../tp4_genieLogiciel/build/reports/tests/test/index.html
      */
 
 

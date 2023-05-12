@@ -77,8 +77,8 @@ public class TestVol {
     }
 
     @Test
-    public void testDuree(){
-//        v1 = new Vol("AF11", ZonedDateTime.now(), ZonedDateTime.now().plusHours(2));
+    public void testDuree() throws Exception {
+        v1 = new Vol("AF11", ZonedDateTime.now(), ZonedDateTime.now().plusHours(2));
         Duration d = Duration.ofHours(2);
         assertEquals(v1.getDuree(), d);
     }
