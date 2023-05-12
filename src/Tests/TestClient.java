@@ -3,6 +3,7 @@ package Tests;
 import com.beust.ah.A;
 import gestionVol.Aeroport;
 import gestionVol.Compagnie;
+import gestionVol.Ville;
 import gestionVol.Vol;
 import org.testng.annotations.BeforeGroups;
 import org.testng.annotations.BeforeMethod;
@@ -49,6 +50,10 @@ public class TestClient {
         cm1.addVol(v1);
         Aeroport a11 = new Aeroport("Aéroport départ");
         Aeroport a12 = new Aeroport("Aéroport arrivé");
+        Ville vi1 = new Ville("Paris");
+        Ville vi2 = new Ville("Brest");
+        a11.setVille(vi1);
+        a12.setVille(vi2);
         v1.setDepart(a11);
         v1.setArrivee(a12);
         v1.ouvrir();

@@ -220,16 +220,24 @@ public class Vol {
      * Setter de date de depart
      * @param depart Date
      */
-    public void setDepart(Aeroport depart) {
-        this.depart = depart;
+    public void setDepart(Aeroport depart) throws Exception {
+        if (depart.getVille() != null){
+            this.depart = depart;
+        } else {
+            throw new Exception("Impossible d'assigner le départ du vol à cet aeroport, car l'aeroport n'est localisé dans aucune ville.");
+        }
     }
 
     /**
      * Setter date d'arrivee
      * @param arrivee Date
      */
-    public void setArrivee(Aeroport arrivee) {
-        this.arrivee = arrivee;
+    public void setArrivee(Aeroport arrivee) throws Exception {
+        if (depart.getVille() != null){
+            this.arrivee = arrivee;
+        } else {
+            throw new Exception("Impossible d'assigner le départ du vol à cet aeroport, car l'aeroport n'est localisé dans aucune ville.");
+        }
     }
 
     /**

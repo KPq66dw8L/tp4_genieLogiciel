@@ -1,9 +1,6 @@
 package Tests;
 
-import gestionVol.Aeroport;
-import gestionVol.Compagnie;
-import gestionVol.Escale;
-import gestionVol.Vol;
+import gestionVol.*;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import reservation.Client;
@@ -29,6 +26,8 @@ public class TestVol {
     Reservation r2;
     Vol v1;
     Compagnie cm1;
+    Ville vi1;
+    Ville vi2;
 
     @BeforeMethod
     public void inits() throws Exception {
@@ -40,6 +39,10 @@ public class TestVol {
         cm1.addVol(v1);
         Aeroport a11 = new Aeroport("Aéroport départ");
         Aeroport a12 = new Aeroport("Aéroport arrivé");
+        vi1 = new Ville("Paris");
+        vi2 = new Ville("Brest");
+        a11.setVille(vi1);
+        a12.setVille(vi2);
         v1.setDepart(a11);
         v1.setArrivee(a12);
         v1.ouvrir();
@@ -54,6 +57,10 @@ public class TestVol {
         cm1.addVol(v1);
         Aeroport a11 = new Aeroport("Aéroport départ");
         Aeroport a12 = new Aeroport("Aéroport arrivé");
+        vi1 = new Ville("Paris");
+        vi2 = new Ville("Brest");
+        a11.setVille(vi1);
+        a12.setVille(vi2);
         v1.setDepart(a11);
         assertThrows(Exception.class, v1::ouvrir); // Informations du vol imcompletes donc impossible de l'ouvrir
         v1.setArrivee(a12);

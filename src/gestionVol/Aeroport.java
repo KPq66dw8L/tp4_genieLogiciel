@@ -6,7 +6,7 @@ import java.util.Set;
 public class Aeroport {
 
     private String nom;
-    private Ville ville;
+    private Ville ville; // ville dans laquelle se situe l'aeroport
     private Set<Ville> villesDesservies;
 
     /**
@@ -39,18 +39,26 @@ public class Aeroport {
     /**
      * Setter de la ville de l'aeroport, ajoute aussi l'aeroport dans la liste de la ville.
      * @param ville Ville
+     * @return
      */
-    public void setVille(Ville ville) {
-        ville.ajouterAeroportWithoutBidirectional(this);
+    public Aeroport setVille(Ville ville) throws Exception {
+        try {
+            ville.ajouterAeroportWithoutBidirectional(this);
+        } catch (Exception e){
+            throw new Exception(e);
+        }
         this.ville = ville;
+        return this;
     }
 
     /**
      * Setter de la ville de l'aeroport.
      * @param ville Ville
+     * @return
      */
-    public void setVilleWithoutBidirectional(Ville ville) {
+    public Aeroport setVilleWithoutBidirectional(Ville ville) {
         this.ville = ville;
+        return this;
     }
 
     /**
@@ -65,8 +73,8 @@ public class Aeroport {
      * Getter ville dans laquelle se trouve l'aeroport
      * @return le nom de la ville
      */
-    public String getVille() {
-        return ville.getNom();
+    public Ville getVille() {
+        return ville;
     }
 
     /**
